@@ -8,8 +8,8 @@ config = {
     'author': 'Matt Holford',
     'author_email': 'mholford@dosomething.org',
     'version': '0.0.1',
-    'install_requires': ['Flask', 'nose'],
-    'packages': ['sms_slack', 'flask_cors'],
+    'install_requires': ['Flask'],
+    'packages': ['sms_slack', 'flask_cors', 'twilio'],
     'scripts': [],
     'name': 'SMS-Slack'
 }
