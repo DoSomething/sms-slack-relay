@@ -35,7 +35,7 @@ def hello():
     return 'You are here'
 
 @app.route('/sms_to_slack/<request_token>', methods=['POST'])
-def route_to_slack():
+def route_to_slack(request_token):
     # Stuff here
     app.logger.debug("Received request with token = %s", request_token)
     app.logger.debug(request.form)
