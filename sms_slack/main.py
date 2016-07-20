@@ -11,6 +11,9 @@ app.config['SLACK_TOKEN'] = os.environ['SLACK_TOKEN']
 # This is assumed to inlude the '#'
 app.config['SLACK_CHANNEL'] = os.environ['SLACK_CHANNEL']
 
+# Request token (set in env vars, and passed as /sms_to_slack/<request_token>)
+app.config['INCOMING_REQUEST_TOKEN'] = os.environ['REQUEST_TOKEN']
+
 # Debug mode
 app.debug = False
 if 'DEBUG' in os.environ and os.environ['DEBUG'] == 'True':
@@ -23,9 +26,20 @@ def hello():
 @app.route('/sms_to_slack/<request_token>', methods=['POST'])
 def route_to_slack(request_token):
 
-    if (app.debug):
+    if app.debug:
         app.logger.debug("Received request with token = %s", request_token)
         app.logger.debug(request.form)
+
+    # Check token -- should match env var INCOMING_REQUEST_TOKEN
+    if request_token != app.config['REQUEST_TOKEN']:
+        app.logger.error("Incorrect token %s", request_token)
+        return json.dumps({
+            'meta': {
+                'code': 401,
+                'errorType': 'token_error',
+                'errorDetail': 'Incorrect request token'
+            },
+        }), 401
 
     # payload={"channel": "#ghost-inspector", "username": "webhookbot", "text": "This is posted to #ghost-inspector and comes from a bot named webhookbot.", "icon_emoji": ":ghost:"}
 
