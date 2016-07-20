@@ -4,13 +4,13 @@ from twilio.rest import TwilioRestClient
 import json, os
 
 try:
-    from flask.ext.cors import CORS  # The typical way to import flask-cors
+    from flask_cors import CORS  # The typical way to import flask-cors
 except ImportError:
     # Path hack allows examples to be run without installation.
     parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     os.sys.path.insert(0, parentdir)
 
-    from flask.ext.cors import CORS
+    from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -30,3 +30,4 @@ def hello():
 @app.route('/sms_to_slack', methods=['POST'])
 def route_to_slack():
     # Stuff here
+    return ''
