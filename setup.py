@@ -9,7 +9,7 @@ config = {
     'author_email': 'mholford@dosomething.org',
     'version': '0.0.1',
     'install_requires': ['Flask'],
-    'packages': ['sms_slack', 'flask_cors', 'twilio'],
+    'packages': ['sms_slack', 'flask_cors', 'twilio', 'requests'],
     'scripts': [],
     'name': 'SMS-Slack'
 }
