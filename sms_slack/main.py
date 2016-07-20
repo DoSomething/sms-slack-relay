@@ -1,16 +1,8 @@
 from flask import Flask, request, jsonify
 from twilio.rest import TwilioRestClient
+from slacker import Slacker
 
 import json, os, requests
-
-try:
-    from flask_cors import CORS  # The typical way to import flask-cors
-except ImportError:
-    # Path hack allows examples to be run without installation.
-    parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    os.sys.path.insert(0, parentdir)
-
-    from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -21,8 +13,9 @@ app.config['TWILIO_AUTH_TOKEN'] = os.environ['TWILIO_AUTH_TOKEN']
 # To verify incoming requests
 app.config['INCOMING_REQUEST_TOKEN'] = os.environ['INCOMING_REQUEST_TOKEN']
 
-# Slack webhook
+# Slack credentials
 app.config['SLACK_WEBHOOK_URL'] = os.environ['SLACK_WEBHOOK_URL']
+app.config['SLACK_TOKEN'] = os.environ['SLACK_TOKEN']
 
 # Debug mode
 app.config['DEBUG'] = os.environ['DEBUG']
@@ -45,6 +38,10 @@ def route_to_slack(request_token):
     message = "SMS from %s: %s" % (request.form["From"], request.form["Body"])
     payload = {"channel": "#ghost-inspector", "username": "twilio", "text": message, "icon_emoji": ":phone:"}
 
-    r = requests.post(app.config['SLACK_WEBHOOK_URL'], data = payload)
+    # r = requests.post(app.config['SLACK_WEBHOOK_URL'], data = payload)
+
+    slack = Slacker(app.config['SLACK_TOKEN'])
+
+    slack.chat.post_message('#ghost-inspector', message)
 
     return ''
