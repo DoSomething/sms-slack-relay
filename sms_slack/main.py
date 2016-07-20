@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from twilio.rest import TwilioRestClient
 
-import json, os
+import json, os, requests
 
 try:
     from flask_cors import CORS  # The typical way to import flask-cors
@@ -39,5 +39,12 @@ def route_to_slack(request_token):
     # Stuff here
     app.logger.debug("Received request with token = %s", request_token)
     app.logger.debug(request.form)
+
+    # payload={"channel": "#ghost-inspector", "username": "webhookbot", "text": "This is posted to #ghost-inspector and comes from a bot named webhookbot.", "icon_emoji": ":ghost:"}
+
+    message = "SMS from %s: %s" % (request.form["From"], request.form["Body"])
+    payload = {"channel": "#ghost-inspector", "username": "twilio", "text": message, "icon_emoji": ":phone:"}
+
+    r = requests.post(app.config['SLACK_WEBHOOK_URL'], data = payload)
 
     return ''
