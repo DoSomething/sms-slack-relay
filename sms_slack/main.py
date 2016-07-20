@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from twilio.rest import TwilioRestClient
 
 import json, os
 
@@ -21,4 +22,11 @@ app.config['INCOMING_REQUEST_TOKEN'] = os.environ['INCOMING_REQUEST_TOKEN']
 
 @app.route('/')
 def hello():
+    client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'], app.config['TWILIO_AUTH_TOKEN'])
+    message = client.messages.create(to="+15084637343", from_="+12027538383",
+                                     body="Hello there!")
     return 'You are here'
+
+@app.route('/sms_to_slack', methods=['POST'])
+def route_to_slack():
+    # Stuff here
