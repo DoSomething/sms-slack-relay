@@ -1,5 +1,3 @@
 Flask
-Flask-MongoEngine
-nose
 flask-cors
 gunicorn
