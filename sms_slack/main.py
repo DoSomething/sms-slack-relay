@@ -12,7 +12,7 @@ app.config['SLACK_TOKEN'] = os.environ['SLACK_TOKEN']
 app.config['SLACK_CHANNEL'] = os.environ['SLACK_CHANNEL']
 
 # Request token (set in env vars, and passed as /sms_to_slack/<request_token>)
-app.config['INCOMING_REQUEST_TOKEN'] = os.environ['REQUEST_TOKEN']
+app.config['REQUEST_TOKEN'] = os.environ['INCOMING_REQUEST_TOKEN']
 
 # Debug mode
 app.debug = False
