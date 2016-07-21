@@ -41,15 +41,9 @@ def route_to_slack(request_token):
             },
         }), 401
 
-    # payload={"channel": "#ghost-inspector", "username": "webhookbot", "text": "This is posted to #ghost-inspector and comes from a bot named webhookbot.", "icon_emoji": ":ghost:"}
-
     message = "SMS from %s: %s" % (request.form["From"], request.form["Body"])
-    payload = {"channel": app.config['SLACK_CHANNEL'], "username": "twilio", "text": message, "icon_emoji": ":phone:"}
-
-    # r = requests.post(app.config['SLACK_WEBHOOK_URL'], data = payload)
 
     slack = Slacker(app.config['SLACK_TOKEN'])
-
-    slack.chat.post_message('#ghost-inspector', message)
+    slack.chat.post_message(app.config['SLACK_CHANNEL'], message)
 
     return ''
