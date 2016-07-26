@@ -9,6 +9,8 @@ In Slack, create an [API access token](https://api.slack.com/tokens).
 
 After creating the app and deploying this code, set these config values:
 
+<img width="912" alt="heroku-config" src="https://cloud.githubusercontent.com/assets/149811/17123224/098880da-52b0-11e6-91eb-df84114d87fd.png">
+
 `INCOMING_REQUEST_TOKEN` is an arbitrary string that you'll also set in the Twilio webhook, below.
 
 `SLACK_CHANNEL` is the channel, obv. Include the `#`.
